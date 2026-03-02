@@ -30,37 +30,5 @@ if (isset($_GET['delete_email'])) {
 </head>
 <body>
 <h2>Data Collect From Website to MySQL!</h2>
-
-<!-- Input Form -->
-<form action="" method="POST">
-    Name     : <input type="text" name="name" required><br>
-    Email    : <input type="text" name="email" required><br>
-    Password : <input type="password" name="pass" required><br>
-    <input type="submit" name="submit_this" value="Submit"><br>
-</form>
-
-<?php
-// Display all users including password hash
-$result = mysqli_query($conn, "SELECT name, email, password FROM u_info");
-if (mysqli_num_rows($result) > 0) {
-    echo "<h3>All Users:</h3>";
-    echo "<table>";
-    echo "<tr><th>Name</th><th>Email</th><th>Password (hashed)</th><th>Action</th></tr>";
-    while ($row = mysqli_fetch_assoc($result)) {
-        echo "<tr>";
-        echo "<td>".$row['name']."</td>";
-        echo "<td>".$row['email']."</td>";
-        echo "<td>".$row['password']."</td>";
-        echo "<td><a class='delete-btn' href='?delete_email=".$row['email']."' onclick=\"return confirm('Are you sure you want to delete this user?');\">Delete</a></td>";
-        echo "</tr>";
-    }
-    echo "</table>";
-} else {
-    echo "<p>No users found yet.</p>";
-}
-
-// Close connection
-mysqli_close($conn);
-?>
 </body>
 </html>
