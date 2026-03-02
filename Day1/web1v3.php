@@ -1,15 +1,4 @@
 <?php
-// Connect to MySQL
-$conn = mysqli_connect('127.0.0.1', 'root', '', 'web1');
-if (!$conn) { die("Connection failed: " . mysqli_connect_error()); }
-
-// Create table if it doesn't exist
-$table_sql = "CREATE TABLE IF NOT EXISTS u_info (
-    name VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL PRIMARY KEY,
-    password VARCHAR(255) NOT NULL
-)";
-mysqli_query($conn, $table_sql);
 
 // Handle Delete Request (by email)
 if (isset($_GET['delete_email'])) {
@@ -20,24 +9,7 @@ if (isset($_GET['delete_email'])) {
     exit();
 }
 
-// Handle Form Submission with PRG
-if (isset($_POST['submit_this'])) {
-    $name = mysqli_real_escape_string($conn, $_POST['name']);
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $pass = password_hash($_POST['pass'], PASSWORD_DEFAULT); // hash password
-
-    $insert_sql = "INSERT INTO u_info (name, email, password) VALUES ('$name', '$email', '$pass')";
-    if (mysqli_query($conn, $insert_sql)) {
-        header("Location: " . $_SERVER['PHP_SELF']);
-        exit();
-    } else {
-        echo "<p style='color:red;'>Insert Error: " . mysqli_error($conn) . "</p>";
-    }
-}
 ?>
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">

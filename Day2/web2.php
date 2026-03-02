@@ -68,26 +68,73 @@
         }
 
         //create db table if it doesn't exit
-        $table_uinfo = "CREATE TABLE IF NOT EXISTS uinfo(
-                        fname VARCHAR(100) NOT NULL,
-                        lname VARCHAR(100) NOT NULL,
-                        uname VARCHAR(20) NOT NULL PRIMARY KEY,
-                        email VARCHAR(100) NOT NULL,
-                        pass  VARCHAR(255) NOT NULL 
-                )";
-                //pass length 255 because password_hash() creates long encrypted strings, it will store hashed password
-        mysqli_query($con, $table_uinfo); // this executes the sql query. runs this table creation command in mysql
-        //$con = database connection
-        //$table_uinfo = sql command
-        /*  PHP Script
-            ↓
-            Create SQL query
-            ↓
-            Send query to MySQL
-            ↓
-            Table created (if not exists)  */
+        $table_web2 = "CREATE TABLE IF NOT EXISTS uinfo(
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            fname VARCHAR(100) NOT NULL,
+            lname VARCHAR(100) NOT NULL,
+            uname VARCHAR(20) NOT NULL UNIQUE,
+            email VARCHAR(100) NOT NULL UNIQUE,
+            pass VARCHAR(255) NOT NULL
+        );";
+        mysqli_query($con, $table_web2); 
 
-            
+        //pass length 255 because password_hash() creates long encrypted strings, it will store hashed password
+        // this executes the sql query. runs this table creation command in mysql
+        //$con = database connection
+        //$table_web2 = sql command
+        /*  PHP Script  → Create SQL query → Send query to MySQL → Table created (if not exists)  */
+
+
+
+        //submission
+        if(isset($_POST['sub'])){
+            $fn = mysqli_real_escape_string($con, $_POST['fname']);
+            $ln = mysqli_real_escape_string($con, $_POST['lname']);
+            $un = mysqli_real_escape_string($con, $_POST['uname']);
+            $em = mysqli_real_escape_string($con, $_POST['email']);
+            // $ps = mysqli_real_escape_string($con, $_POST['pass']);
+            $ps = password_hash($_POST['pass'], PASSWORD_DEFAULT); //HASH PASSWORD!
+
+            $insert_sql = "INSERT INTO uinfo (fname, lname, uname, email, pass) VALUES ('$fn', '$ln', '$un', '$em', '$ps')";
+            if(mysqli_query($con, $insert_sql)){ // runs SQL query, $con -> db connection, then $insert_sql -> insert command
+                header("Location: " . $_SERVER['PHP_SELF']); //this sends a redirect header to the browser, 
+                // header("Location: " .... redirects user to another page
+                // $_SERVER['PHP_SELF'] returns current page filename
+                exit(); //Stops PHP execution immediately.
+
+                //its a PRG (post-> redirect -> get) pattern
+                // if the db insert query succeeds then this page reloads itslf and stops execution!
+
+                // User submits form (POST) -> Insert into database ->  Redirect to same page (GET request) -> Page reloads cleanly 
+            }else{
+                echo "<p style = 'color:red;'>An error occurred while inserting data. Error : " . mysqli_error($con) . "</p>";
+                // it displays a db error message on website in red color,if SQL query fails
+                // echo -> php command used to print output to the browser.
+                // mysqli_error($con) -> returns the last mysql error from the connection, shows why this query failed!
+            }
+        }
+
+
+        //display all users info!
+        $show = mysqli_query($con, "SELECT CONCAT(fname, ' ', lname) AS Name, email AS Email, uname AS UserName FROM uinfo");
+        if(mysqli_num_rows($show) > 0){{
+            echo "<h3>All Users Info!</h3>";
+            echo "<table>";
+            echo "<tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>UserName</th>
+                    <th>Action</th>
+                  </tr>";
+            while ($row = mysqli_fetch_assoc($show))
+            echo "</table>";
+        }
+
+        }
+
+
+
+
 
     ?>
 </body>
