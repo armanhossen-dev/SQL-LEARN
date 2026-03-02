@@ -29,44 +29,28 @@
         //$table_web2 = sql command
         /*  PHP Script  → Create SQL query → Send query to MySQL → Table created (if not exists)  */
 
-
-
         //submission
         if(isset($_POST['sub'])){
             $fn = mysqli_real_escape_string($con, $_POST['fname']);
             $ln = mysqli_real_escape_string($con, $_POST['lname']);
             $un = mysqli_real_escape_string($con, $_POST['uname']);
             $em = mysqli_real_escape_string($con, $_POST['email']);
-            // $ps = mysqli_real_escape_string($con, $_POST['pass']);
-            $ps = password_hash($_POST['pass'], PASSWORD_DEFAULT); //HASH PASSWORD! 
+            $ps = password_hash($_POST['pass'], PASSWORD_DEFAULT);
 
-            $insert_sql = "INSERT INTO uinfo (fname, lname, uname, email, pass) VALUES ('$fn', '$ln', '$un', '$em', '$ps')";
+            $stmt = mysqli_prepare($con, "INSERT INTO uinfo (fname, lname, uname, email, pass) VALUES (?, ?, ?, ?, ?)");
+            mysqli_stmt_bind_param($stmt, "sssss", $fn, $ln, $un, $em, $ps);
             
-            // header("Location: " . $_SERVER['PHP_SELF']); //this sends a redirect header to the browser, 
-            // header("Location: " .... redirects user to another page
-            // $_SERVER['PHP_SELF'] returns current page filename
-            //exit(); //Stops PHP execution immediately.
-            
-            //its a PRG (post-> redirect -> get) pattern
-            // if the db insert query succeeds then this page reloads itslf and stops execution!
-            
-            // User submits form (POST) -> Insert into database ->  Redirect to same page (GET request) -> Page reloads cleanly 
-            
-            if(mysqli_query($con, $insert_sql)){ // runs SQL query, $con -> db connection, then $insert_sql -> insert command
-                echo "Inserted!!!";
+            if(mysqli_stmt_execute($stmt)){
                 header("Location: " . $_SERVER['PHP_SELF']);
                 exit();
+            } else {
+                echo "<p class='text-red-500 p-3 bg-pink-700 text-center'>Insert Error: " . mysqli_stmt_error($stmt) . "</p>";
             }
-            else{
-                echo mysqli_error($con);
-                echo "<p style = 'color:red;'>Inser Error : " . mysqli_error($con) . "</p>";
-                // it displays a db error message on website in red color,if SQL query fails
-                // echo -> php command used to print output to the browser.
-                // mysqli_error($con) -> returns the last mysql error from the connection, shows why this query failed!
-            }
-        }
-
-
+        } // ✅ closing brace goes HERE, after all insert logic
+        //its a PRG (post-> redirect -> get) pattern
+        // if the db insert query succeeds then this page reloads itslf and stops execution!
+        // User submits form (POST) -> Insert into database ->  Redirect to same page (GET request) -> Page reloads cleanly 
+        
         //delete request(by id)
         if(isset($_GET['delete_id'])){
             //as id is integer ,so this will not work, $e = mysqli_real_escape_string($con, $_GET['delete_id']);

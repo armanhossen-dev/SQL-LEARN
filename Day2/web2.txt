@@ -1,6 +1,16 @@
 //learning: 
 before web2 open with five server, i have to create web2 db in mysql shell
 
+
+open the xampp, start apache, mysql, then opne this in vs code, 
+this link for mac: (for myself, 
+as this file is inside DBMS folder in /Applications/XAMPP/xamppfiles/htdocs/DBMS/Day2 )
+http://localhost/DBMS/Day2/web2.php
+
+always open the local host link not the number link, because it sometimes shows the page but doesn't allow you to submit data or modify the db
+
+
+
 INSERT INTO uinfo (fname, lname, uname, email, pass)
 VALUES ('Arman', 'Hossen', 'ahrn', '2armanhossen@gmail.com', 'testpassword');
 
