@@ -1,0 +1,45 @@
+https://youtu.be/zZ6vybT1HQs -php
+
+https://youtu.be/JUzIeAHPYUo -web1
+
+
+save the web1.php inside
+mac: application>xampp>xamppfiles>htdocs
+
+open that web inside any browser in my mac, after  turning on apache and mysql 
+localhost/web1.php
+but as its inside DBMS folder in this htdocs folder so
+http://localhost/DBMS/web1.php
+
+after changes in this web1.php you have to refresh manualy in the 
+http://localhost/DBMS/web1.php
+to see the changes 🙂
+
+
+now lets create database!
+create database web1;
+use web1;
+
+create table u_info(
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name varchar(100) NOT NULL,
+    email varchar(50) NOT NULL,
+    password varchar(15) NOT NULL
+);
+
+describe u_info;
++----------+--------------+------+-----+---------+----------------+
+| Field    | Type         | Null | Key | Default | Extra          |
++----------+--------------+------+-----+---------+----------------+
+| id       | int(11)      | NO   | PRI | NULL    | auto_increment |
+| name     | varchar(100) | NO   |     | NULL    |                |
+| email    | varchar(50)  | NO   |     | NULL    |                |
+| password | varchar(15)  | NO   |     | NULL    |                |
++----------+--------------+------+-----+---------+----------------+
+
+we will use php as Backend lan to connect my website to my database!
+we will use name attribute in input tag
+
+
+
+https://youtu.be/JUzIeAHPYUo?t=978
