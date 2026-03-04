@@ -1,0 +1,35 @@
+open 
+http://localhost/dbms/day3/login.php
+
+open xampp, start apache, mysql db
+open shell/terminal
+
+show databases;
+
+create database web2;
+
+use web2;
+
+show tables;
++----------------+
+| Tables_in_web2 |
++----------------+
+| user_data      |
++----------------+
+
+
+describe user_data;
++--------+--------------+------+-----+---------+----------------+
+| Field  | Type         | Null | Key | Default | Extra          |
++--------+--------------+------+-----+---------+----------------+
+| id     | int(11)      | NO   | PRI | NULL    | auto_increment |
+| uemail | varchar(255) | NO   | UNI | NULL    |                |
+| uname  | varchar(100) | NO   |     | NULL    |                |
++--------+--------------+------+-----+---------+----------------+
+
+
+// after login whats happen
+// every page request 
+Browser send session id
+Server loads user Data
+User rmains logged in
