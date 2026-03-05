@@ -11,7 +11,7 @@ session_start(); //it starts a new session for a user, and remembers him, his da
     //live: http://localhost/dbms/day3/login.php
     $conn = mysqli_connect('127.0.0.1', 'root', '', 'web2');
     if(!$conn){
-        die("connection filed: " . mysqli_connect_error());
+        die("connection failed: " . mysqli_connect_error());
     }
 
     /// create the new table if its not there, 
@@ -66,15 +66,32 @@ session_start(); //it starts a new session for a user, and remembers him, his da
                 $_SESSION['user_name'] = $user['uname'];
                 $login_message = "<p class= 'text-green-400 p-3 bg-blue-300'>Login Successfull! Welcome, ".$user['fname'].".</p>";
             }else{
-                $login_message = "<p class='text-red p-3 bg-red-500'>User not found!</p>";
+                $login_message = "<p class='text-red p-3 bg-red-500'>Incorrect password!</p>";
             }
+        }else{
+            $login_message = "<p class='text-red-400'>Email not found!</p>";
         }
-
     }
 
 
-    
 
+
+    //Handel Logout!
+    if(isset($_GET['logout'])){
+        // $_GET is a superglobal array that stores data sent through URL paramerters like index.php?logut=ture
+        //isset() it checks whethera variable exists and is not NULL
+        session_destroy();
+        //session_destry() deletes all session data stored on the server, user becomes logged out.
+        header("Location: " . $_SERVER['PHP_SELF']);
+        //header() sends and HTTP redirect.
+        //$_SERVER['PHP_SELF'] -> it returns the current page filename.
+        exit();
+        //prevent the rest of the script from running, because after header() redirect, php should not continue executing the remaining code
+    }
+
+    //show logged in user
+    $logged_in = isset($_SESSION['user_email']);
+    
 ?>  
 
 <!DOCTYPE html>
@@ -87,5 +104,75 @@ session_start(); //it starts a new session for a user, and remembers him, his da
 </head>
 <body class="bg-black">
     
+    <h2 class="">Login System</h2>
+    <?php echo $login_message; ?>
+
+    
+    <?php if($logged_in): ?> <!-- if the user is logged in, run the code below -->
+        <p class="p-3 bg-red-400 text-white">Welcome, <?php echo htmlspecialchars($_SESSION['user_name']);?>! <a href="?logout=1" class="bg-rose-500 px-3 py-2 rounded-lg">Logout</a> </p>
+        <? else: ?>
+        <?php endif; ?>
+        <!-- login form -->
+        <!-- bg-sky-300 max-w-lg p-5 rounded-lg mx-auto text-2xl mt-10     -->
+        <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST"
+              class="max-w-lg mx-auto
+                    bg-white/10 backdrop-blur-xl border border-white/25 rounded-2xl p-8
+                    hover:border-white/40 transition">                
+
+            <label class="text-white flex flex-1" for="fname">First Name:</label>
+            <input class="w-full border border-blue-800 rounded-lg 
+                         py-1 px-2 mb-3 
+                         focus: outline-none
+                         focus:ring-blue-400
+                         focus:border-blue-500"
+                        type="text" name="fname" requred>
+
+
+            
+            <label class="text-white flex flex-1" for="lname">Last Name:</label>
+            <input class="w-full border border-blue-800 rounded-lg 
+                         py-1 px-2 mb-3 
+                         focus: outline-none
+                         focus:ring-blue-400
+                         focus:border-blue-500"
+                        type="text" name="lname" requred>
+
+
+            
+            <label class="text-white flex flex-1" for="email">Email :</label>
+            <input class="w-full border border-blue-800 rounded-lg 
+                         py-1 px-2 mb-3 
+                         focus: outline-none
+                         focus:ring-blue-400
+                         focus:border-blue-500"
+                        type="email" name="email" requred>
+
+
+
+            <label class="text-white flex flex-1" for="uname">User Name:</label>
+            <input class="w-full border border-blue-800 rounded-lg 
+                         py-1 px-2 mb-3 
+                         focus: outline-none
+                         focus:ring-blue-400
+                         focus:border-blue-500"
+                        type="text" name="uname" requred>
+
+
+
+            <label class="text-white flex flex-1" for="pssword">Password:</label>
+            <input class="w-full border border-blue-800 rounded-lg 
+                         py-1 px-2 mb-3 
+                         focus: outline-none
+                         focus:ring-blue-400
+                         focus:border-blue-500"
+                        type="password" name="pass" required>
+
+
+            <input class="w-full  mt-3 bg-white  py-2 rounded-lg font-bold
+                         hover:bg-yellow-500 transition duration-200"
+             type="submit" name="submit_to_register_btn" value="Register">
+        </form>
+
+
 </body>
 </html>

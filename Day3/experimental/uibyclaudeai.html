@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --pink:   #ff2d78;
+      --orange: #ff6b35;
+      --yellow: #ffd93d;
+      --cyan:   #06d6a0;
+      --purple: #7c3aed;
+      --blue:   #3b82f6;
+      --dark:   #0a0a12;
+      --card:   rgba(255,255,255,0.055);
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--dark);
+      font-family: 'DM Sans', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+      overflow-x: hidden;
+    }
+
+    /* ── animated mesh background ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 10% 20%,  rgba(124,58,237,.35) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 50% at 90% 80%,  rgba(255,45,120,.30) 0%, transparent 60%),
+        radial-gradient(ellipse 55% 55% at 50% 50%,  rgba(6,214,160,.18) 0%, transparent 60%),
+        radial-gradient(ellipse 70% 40% at 70% 10%,  rgba(255,107,53,.25) 0%, transparent 55%);
+      z-index: 0;
+      animation: bgPulse 8s ease-in-out infinite alternate;
+    }
+    @keyframes bgPulse {
+      from { opacity: .8; }
+      to   { opacity: 1;  }
+    }
+
+    /* floating blobs */
+    .blob { position: fixed; border-radius: 50%; filter: blur(80px); opacity: .18; z-index: 0; pointer-events: none; }
+    .blob-1 { width:420px; height:420px; background:var(--purple); top:-120px; left:-100px; animation: float1 12s ease-in-out infinite; }
+    .blob-2 { width:350px; height:350px; background:var(--pink);   bottom:-80px; right:-60px; animation: float2 10s ease-in-out infinite; }
+    .blob-3 { width:280px; height:280px; background:var(--cyan);   top:50%; left:60%;  animation: float3 14s ease-in-out infinite; }
+    @keyframes float1 { 0%,100%{transform:translate(0,0) scale(1)}  50%{transform:translate(40px,30px) scale(1.08)} }
+    @keyframes float2 { 0%,100%{transform:translate(0,0) scale(1)}  50%{transform:translate(-30px,-40px) scale(1.1)} }
+    @keyframes float3 { 0%,100%{transform:translate(0,0) scale(1)}  50%{transform:translate(-20px,25px) scale(.95)} }
+
+    /* ── section heading ── */
+    .section-heading {
+      position: relative; z-index: 1;
+      display: inline-flex; align-items: center; gap: .75rem;
+      background: linear-gradient(135deg, var(--pink), var(--orange));
+      color: #fff;
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: .6rem 1.4rem;
+      border-radius: 12px;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 24px rgba(255,45,120,.45);
+    }
+
+    /* ── card ── */
+    .card {
+      position: relative; z-index: 1;
+      width: 100%; max-width: 480px;
+      background: var(--card);
+      backdrop-filter: blur(28px) saturate(180%);
+      -webkit-backdrop-filter: blur(28px) saturate(180%);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 28px;
+      padding: 2.6rem 2.4rem;
+      box-shadow:
+        0 8px 40px rgba(0,0,0,.55),
+        inset 0 1px 0 rgba(255,255,255,.12);
+      animation: slideUp .7s cubic-bezier(.22,1,.36,1) both;
+    }
+    @keyframes slideUp {
+      from { opacity:0; transform:translateY(40px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .card:hover {
+      border-color: rgba(255,255,255,.22);
+      box-shadow: 0 12px 60px rgba(124,58,237,.35), 0 8px 40px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.14);
+      transition: all .4s ease;
+    }
+
+    /* ── card logo/title ── */
+    .card-top {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .card-icon {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 64px; height: 64px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+      box-shadow: 0 6px 24px rgba(124,58,237,.5);
+      font-size: 1.7rem;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+    .card-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.2;
+    }
+    .card-title span {
+      background: linear-gradient(90deg, var(--cyan), var(--blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .card-subtitle {
+      font-size: .88rem;
+      color: rgba(255,255,255,.45);
+      margin-top: .35rem;
+    }
+
+    /* ── form fields ── */
+    .field {
+      margin-bottom: 1.1rem;
+      animation: fadeIn .5s ease both;
+    }
+    .field:nth-child(1){ animation-delay:.1s }
+    .field:nth-child(2){ animation-delay:.18s }
+    .field:nth-child(3){ animation-delay:.26s }
+    .field:nth-child(4){ animation-delay:.34s }
+    .field:nth-child(5){ animation-delay:.42s }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:none} }
+
+    label {
+      display: flex; align-items: center; gap: .5rem;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.6);
+      margin-bottom: .4rem;
+    }
+    label i {
+      font-size: .85rem;
+    }
+
+    /* per-field accent colours */
+    .field-fname  label i { color: var(--cyan);   }
+    .field-lname  label i { color: var(--yellow);  }
+    .field-email  label i { color: var(--orange);  }
+    .field-uname  label i { color: var(--blue);    }
+    .field-pass   label i { color: var(--pink);    }
+
+    .input-wrap {
+      position: relative;
+    }
+    .input-wrap input {
+      width: 100%;
+      background: rgba(255,255,255,.07);
+      border: 1.5px solid rgba(255,255,255,.12);
+      border-radius: 12px;
+      padding: .72rem 1rem .72rem 2.8rem;
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: .97rem;
+      outline: none;
+      transition: border .25s, box-shadow .25s, background .25s;
+    }
+    .input-wrap input::placeholder { color: rgba(255,255,255,.22); }
+    .input-wrap .icon {
+      position: absolute; left: .95rem; top: 50%; transform: translateY(-50%);
+      font-size: .9rem;
+      pointer-events: none;
+      transition: color .25s;
+    }
+
+    /* focus glow colours per field */
+    .field-fname  .input-wrap input:focus { border-color: var(--cyan);   box-shadow: 0 0 0 3px rgba(6,214,160,.18);   background: rgba(6,214,160,.06); }
+    .field-lname  .input-wrap input:focus { border-color: var(--yellow); box-shadow: 0 0 0 3px rgba(255,217,61,.18);  background: rgba(255,217,61,.06); }
+    .field-email  .input-wrap input:focus { border-color: var(--orange); box-shadow: 0 0 0 3px rgba(255,107,53,.18);  background: rgba(255,107,53,.06); }
+    .field-uname  .input-wrap input:focus { border-color: var(--blue);   box-shadow: 0 0 0 3px rgba(59,130,246,.18);  background: rgba(59,130,246,.06); }
+    .field-pass   .input-wrap input:focus { border-color: var(--pink);   box-shadow: 0 0 0 3px rgba(255,45,120,.18);  background: rgba(255,45,120,.06); }
+
+    .field-fname  .input-wrap input:focus ~ .icon, .field-fname .input-wrap input:focus + .icon { color: var(--cyan); }
+    .field-lname  .input-wrap .icon { color: var(--yellow); }
+    .field-fname  .input-wrap .icon { color: var(--cyan); }
+    .field-email  .input-wrap .icon { color: var(--orange); }
+    .field-uname  .input-wrap .icon { color: var(--blue); }
+    .field-pass   .input-wrap .icon { color: var(--pink); }
+
+    /* ── divider ── */
+    .divider {
+      display: flex; align-items: center; gap: .8rem;
+      margin: 1.4rem 0;
+      color: rgba(255,255,255,.2);
+      font-size: .75rem;
+    }
+    .divider::before, .divider::after {
+      content: ''; flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.15), transparent);
+    }
+
+    /* ── submit button ── */
+    .btn-submit {
+      width: 100%;
+      padding: .85rem 1rem;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--purple) 0%, var(--pink) 50%, var(--orange) 100%);
+      background-size: 200% 200%;
+      color: #fff;
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: .05em;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: .6rem;
+      box-shadow: 0 6px 30px rgba(255,45,120,.4);
+      transition: transform .2s, box-shadow .2s, background-position .5s;
+      position: relative;
+      overflow: hidden;
+      animation: fadeIn .5s .5s ease both;
+    }
+    .btn-submit::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(255,255,255,0);
+      transition: background .2s;
+    }
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 40px rgba(255,45,120,.55);
+      background-position: right center;
+    }
+    .btn-submit:hover::after { background: rgba(255,255,255,.07); }
+    .btn-submit:active { transform: translateY(0); }
+
+    /* ── footer note ── */
+    .login-link {
+      text-align: center;
+      margin-top: 1.2rem;
+      font-size: .83rem;
+      color: rgba(255,255,255,.38);
+      animation: fadeIn .5s .6s ease both;
+    }
+    .login-link a {
+      color: var(--cyan);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .login-link a:hover { text-decoration: underline; }
+
+    /* ── colour bar at bottom of card ── */
+    .card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 10%; right: 10%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--purple), var(--pink), var(--orange), var(--yellow), var(--cyan), var(--blue));
+      border-radius: 0 0 6px 6px;
+      opacity: .7;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <h2 class="section-heading">
+    <i class="fa-solid fa-fire"></i>
+    4. Example Combination (Best One)
+  </h2>
+
+  <div class="card">
+    <div class="card-top">
+      <div class="card-icon"><i class="fa-solid fa-bolt"></i></div>
+      <div class="card-title">Create your <span>Account</span></div>
+      <div class="card-subtitle">Join thousands of users today — it's free</div>
+    </div>
+
+    <form action="" method="POST">
+
+      <div class="field field-fname">
+        <label for="fname"><i class="fa-solid fa-user"></i> First Name</label>
+        <div class="input-wrap">
+          <input type="text" id="fname" name="fname" placeholder="Jane" required />
+          <i class="fa-solid fa-user icon"></i>
+        </div>
+      </div>
+
+      <div class="field field-lname">
+        <label for="lname"><i class="fa-solid fa-id-card"></i> Last Name</label>
+        <div class="input-wrap">
+          <input type="text" id="lname" name="lname" placeholder="Doe" required />
+          <i class="fa-solid fa-id-card icon"></i>
+        </div>
+      </div>
+
+      <div class="field field-email">
+        <label for="email"><i class="fa-solid fa-envelope"></i> Email</label>
+        <div class="input-wrap">
+          <input type="email" id="email" name="email" placeholder="jane@example.com" required />
+          <i class="fa-solid fa-envelope icon"></i>
+        </div>
+      </div>
+
+      <div class="divider"><i class="fa-solid fa-ellipsis"></i></div>
+
+      <div class="field field-uname">
+        <label for="uname"><i class="fa-solid fa-at"></i> Username</label>
+        <div class="input-wrap">
+          <input type="text" id="uname" name="uname" placeholder="jane_doe99" required />
+          <i class="fa-solid fa-at icon"></i>
+        </div>
+      </div>
+
+      <div class="field field-pass">
+        <label for="password"><i class="fa-solid fa-lock"></i> Password</label>
+        <div class="input-wrap">
+          <input type="password" id="password" name="pass" placeholder="••••••••••" required />
+          <i class="fa-solid fa-lock icon"></i>
+        </div>
+      </div>
+
+      <button class="btn-submit" type="submit" name="submit_to_register_btn">
+        <i class="fa-solid fa-rocket"></i> Create Account
+      </button>
+    </form>
+
+    <p class="login-link">Already have an account? <a href="#">Sign in</a></p>
+  </div>
+
+</body>
+</html>
