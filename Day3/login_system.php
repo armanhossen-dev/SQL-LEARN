@@ -91,7 +91,7 @@ if (isset($_POST['register_submit'])) {
     } else {
         echo "<p style='color:red;'>Registration Error: " . mysqli_error($conn) . "</p>";
     }
-}
+}       
 
 // Close connection
 mysqli_close($conn);

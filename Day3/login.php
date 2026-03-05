@@ -74,9 +74,7 @@ session_start(); //it starts a new session for a user, and remembers him, his da
     }
 
 
-
-
-    //Handel Logout!
+   //Handel Logout!
     if(isset($_GET['logout'])){
         // $_GET is a superglobal array that stores data sent through URL paramerters like index.php?logut=ture
         //isset() it checks whethera variable exists and is not NULL
@@ -91,6 +89,31 @@ session_start(); //it starts a new session for a user, and remembers him, his da
 
     //show logged in user
     $logged_in = isset($_SESSION['user_email']);
+
+
+     
+    //Handel Registration
+    $register_message = "";
+
+    if(isset($_POST['submit_to_register_btn'])){
+        $fn = mysqli_real_escape_string($conn, $_POST['fname']);
+        $ln = mysqli_real_escape_string($conn, $_POST['lname']);
+        $un = mysqli_real_escape_string($conn, $_POST['uname']);
+        $em = mysqli_real_escape_string($conn, $_POST['email']);
+        $ps = mysqli_real_escape_string($conn, $_POST['pass']);
+        
+        $insert_sql = "INSERT INTO user_data(fname, lname, uname, uemail, pass) VALUES 
+        ('$fn','$ln','$un','$em','$ps')";
+
+        if(mysqli_query($conn, $insert_sql)){
+            $register_message = "Registration Successful!";
+        }else{
+            $register_message = "Registration Error: ". mysqli_error($conn);
+        }
+    }
+    //close connection
+    // mysqli_close($conn);
+
     
 ?>  
 
@@ -101,21 +124,34 @@ session_start(); //it starts a new session for a user, and remembers him, his da
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login & Registration</title>
     <script src="https://cdn.tailwindcss.com" ></script>
+    
 </head>
 <body class="bg-black">
     
     <?php echo $login_message; ?>
     
-    <?php if($logged_in): ?> <!-- if the user is logged in, run the code below -->
-        <p class="p-3 bg-red-400 text-white">Welcome, <?php echo htmlspecialchars($_SESSION['user_name']);?>! <a href="?logout=1" class="bg-rose-500 px-3 py-2 rounded-lg">Logout</a> </p>
-        <? else: ?>
-            <?php endif; ?>
-            <h2 class="text-white p-3 mx-auto w-2/3 rounded-xl my-10 bg-red-600 uppercase text-2xl text-center font-bold">Login System</h2>
+        <?php if($logged_in): ?> <!-- if the user is logged in, run the code below -->
+            <p class="p-3 text-red-400 text-white">
+                Welcome, <?php echo htmlspecialchars($_SESSION['user_name']); ?>
+                <a href="?logout=1" class="bg-red-500 px-3 py-2 rounded-lg">Logout</a>
+            </p>
+        
+        <?php else: ?>
+            <h2 class="text-white p-3 mx-auto w-2/3 rounded-xl my-10 bg-red-600 uppercase
+                      text-2xl text-center font-bold">Login System</h2>
+          
             
-            <!-- login form -->
-            <!-- bg-sky-300 max-w-lg p-5 rounded-lg mx-auto text-2xl mt-10     -->
+            <?php if($register_message): ?>
+                <p id="regMsg"
+                class="bg-green-500/20 text-green-300 border border-green-500
+                max-w-lg w-2/3 mx-auto py-3 my-4 text-center rounded-xl transition-opacity duration-500">
+                    <?php echo $register_message; ?>
+                </p>
+            <?php endif; ?> 
+        <?php endif; ?> 
 
-            <h3 class="bg-white/10 text-white border border-white/20 mx-w-lg w-2/3 mx-auto py-3 my-2 text-center rounded-xl">Register New User</h3>
+
+            <h3 class="bg-white/10 text-white border border-white/20 max-w-lg w-2/3 mx-auto py-3 my-2 text-center rounded-xl">Register New User</h3>
             <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="POST"
               class="max-w-lg mx-auto
                     bg-white/10 backdrop-blur-xl border border-white/25 rounded-2xl p-8
@@ -127,9 +163,7 @@ session_start(); //it starts a new session for a user, and remembers him, his da
                          focus: outline-none
                          focus:ring-blue-400
                          focus:border-blue-500"
-                        type="text" name="fname" requred>
-
-
+                        type="text" name="fname" required>
             
             <label class="text-white flex flex-1" for="lname">Last Name:</label>
             <input class="w-full border border-blue-800 rounded-lg 
@@ -137,9 +171,7 @@ session_start(); //it starts a new session for a user, and remembers him, his da
                          focus: outline-none
                          focus:ring-blue-400
                          focus:border-blue-500"
-                        type="text" name="lname" requred>
-
-
+                        type="text" name="lname" required>
             
             <label class="text-white flex flex-1" for="email">Email :</label>
             <input class="w-full border border-blue-800 rounded-lg 
@@ -147,9 +179,7 @@ session_start(); //it starts a new session for a user, and remembers him, his da
                          focus: outline-none
                          focus:ring-blue-400
                          focus:border-blue-500"
-                        type="email" name="email" requred>
-
-
+                        type="email" name="email" required>
 
             <label class="text-white flex flex-1" for="uname">User Name:</label>
             <input class="w-full border border-blue-800 rounded-lg 
@@ -157,9 +187,7 @@ session_start(); //it starts a new session for a user, and remembers him, his da
                          focus: outline-none
                          focus:ring-blue-400
                          focus:border-blue-500"
-                        type="text" name="uname" requred>
-
-
+                        type="text" name="uname" required>
 
             <label class="text-white flex flex-1" for="pssword">Password:</label>
             <input class="w-full border border-blue-800 rounded-lg 
@@ -176,5 +204,8 @@ session_start(); //it starts a new session for a user, and remembers him, his da
         </form>
 
 
-</body>
+
+
+        <script src="login.js"></script>
+    </body>
 </html>
