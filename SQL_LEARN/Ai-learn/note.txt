@@ -1,0 +1,38 @@
+📚 Complete Guide (Theory)
+Covers everything from basics to advanced:
+
+Database fundamentals & setup
+DDL (CREATE, ALTER, DROP tables)
+DML (INSERT, UPDATE, DELETE)
+Querying with WHERE, JOIN, GROUP BY
+Subqueries & CTEs
+Stored Procedures & Functions
+Triggers & Transactions
+Views, Indexes, Window Functions
+JSON, Full-text Search, Partitioning
+
+💻 Practice Workbook (Hands-on)
+Progressive exercises across 10 levels:
+
+Table creation & data insertion
+Basic queries (SELECT, WHERE, ORDER BY)
+Aggregate functions
+JOINs (4 tables practice)
+Subqueries
+GROUP BY & HAVING
+Stored Procedures
+Triggers
+Views
+Transactions
+
+Plus challenge exercises with window functions, recursive CTEs, and complex queries.
+How to Use:
+
+Start with the guide - read through topics
+Open XAMPP & start MySQL
+Run the workbook in phpMyAdmin or MySQL terminal
+Try each exercise before looking at solutions
+Build alongside - apply to your Asha Bank or other projects
+
+Since you're already working on DBMS coursework and have built bank systems, you'll breeze through levels 1-4. Focus on levels 7-10 (procedures, triggers, transactions) and the challenge section.
+Good luck! 🚀
