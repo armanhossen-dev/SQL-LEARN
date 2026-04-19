@@ -1,0 +1,5 @@
+-- this is comment
+-- lets go to terminal 
+/Applications/XAMPP/bin/mysql -u root
+
+show databases;
