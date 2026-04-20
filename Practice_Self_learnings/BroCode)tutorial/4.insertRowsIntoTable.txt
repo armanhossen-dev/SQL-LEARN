@@ -1,0 +1,32 @@
+drop table employes;
+
+create table emp(
+    emp_id INT,
+    fname VARCHAR(50),
+    lname VARCHAR(50),
+    hourly_pay DECIMAL(5, 2),
+    hire_date DATE
+);
+
+//date = yyyy-mm-dd
+
+insert into emp
+values(1, "Arman", "Hossen", 25.50, "2026-01-02");
+
+insert into emp values 
+(2, "Rahul", "Hosine", 25.50, "2024-05-05"), 
+(3, "Sandy", "Husk", 34.60, "2020-04-03"), 
+(4, "Hasib", "Rohman", 30.20, "2023-04-03"), 
+(5, "sabbir", "Borhan", 31.20, "2022-12-03");
+
+select * from emp;
++--------+--------+--------+------------+------------+
+| emp_id | fname  | lname  | hourly_pay | hire_date  |
++--------+--------+--------+------------+------------+
+|      1 | Arman  | Hossen |      25.50 | 2026-01-02 |
+|      2 | Rahul  | Hosine |      25.50 | 2024-05-05 |
+|      3 | Sandy  | Husk   |      34.60 | 2020-04-03 |
+|      4 | Hasib  | Rohman |      30.20 | 2023-04-03 |
+|      5 | sabbir | Borhan |      31.20 | 2022-12-03 |
++--------+--------+--------+------------+------------+
+

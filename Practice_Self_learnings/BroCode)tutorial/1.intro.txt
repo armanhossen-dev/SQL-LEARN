@@ -1,0 +1,24 @@
+https://youtu.be/oPV2sjMG53U?list=PLZPZq0r_RZOMskz6MdsMOgxzheIyjo-BZ
+
+sql
+s = Structured
+q = query 
+l = language
+
+
+SQL is used to 
+1. create
+2. retrieve
+3. update
+4. delete 
+
+database 2 types
+1. relational   used sql 
+2. Non- relational used nosql - not only sql but many lan or other
+
+to work with sql, we need DBMS - database management system
+some DBMS
+- MySQL
+- Microsoft SQL Server
+- ORACLE 
+- PostgreSQL

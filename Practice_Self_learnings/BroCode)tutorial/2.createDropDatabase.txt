@@ -1,0 +1,15 @@
+show databases;
+create database mydb;
+use mydb;
+show databases;
+drop database mysql;
+
+
+//make database read-only - this are for microsft sql server not mariaDB
+alter database mydb read only = 1; //readonly
+alter database mydb read only = 0; //not readonly
+
+
+for mariaDB
+set global read_only = on; // now i can only have acces the data not change it , also i can't delete it
+set gloabl read_only = off;

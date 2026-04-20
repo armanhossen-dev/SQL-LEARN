@@ -1,0 +1,93 @@
+create table emp(
+    emp_id INT,
+    fname VARCHAR(50),
+    lname VARCHAR(50),
+    hourly_pay DECIMAL(5, 2),
+    hire_date DATE
+);
+
+SHOW TABLES;
++----------------+
+| Tables_in_mydb |
++----------------+
+| emp            |
++----------------+
+
+RENAME TABLE emp TO employes;
+drop table employes;
+
+ALTER TABLE employes ADD phone_number VARCHAR(15);
+
+alter table employes change phone_number email varchar(30);
+describe employes;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| emp_id     | int(11)      | YES  |     | NULL    |       |
+| fname      | varchar(50)  | YES  |     | NULL    |       |
+| lname      | varchar(50)  | YES  |     | NULL    |       |
+| hourly_pay | decimal(5,2) | YES  |     | NULL    |       |
+| hire_date  | date         | YES  |     | NULL    |       |
+| email      | varchar(30)  | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+
+
+alter table employes modify column email varchar(40);
+describe employes;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| emp_id     | int(11)      | YES  |     | NULL    |       |
+| fname      | varchar(50)  | YES  |     | NULL    |       |
+| lname      | varchar(50)  | YES  |     | NULL    |       |
+| hourly_pay | decimal(5,2) | YES  |     | NULL    |       |
+| hire_date  | date         | YES  |     | NULL    |       |
+| email      | varchar(40)  | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+
+
+//to change the column location, move it left or right side
+alter table employes modify email varchar(30) after lname;
+describe employes;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| emp_id     | int(11)      | YES  |     | NULL    |       |
+| fname      | varchar(50)  | YES  |     | NULL    |       |
+| lname      | varchar(50)  | YES  |     | NULL    |       |
+| email      | varchar(30)  | YES  |     | NULL    |       |
+| hourly_pay | decimal(5,2) | YES  |     | NULL    |       |
+| hire_date  | date         | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+
+
+
+//if i want to make the column to be first
+alter table employes modify column_name datatype first;
+
+alter table employes modify hire_date date first;
+describe employes;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| hire_date  | date         | YES  |     | NULL    |       |
+| emp_id     | int(11)      | YES  |     | NULL    |       |
+| fname      | varchar(50)  | YES  |     | NULL    |       |
+| lname      | varchar(50)  | YES  |     | NULL    |       |
+| email      | varchar(30)  | YES  |     | NULL    |       |
+| hourly_pay | decimal(5,2) | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
+
+
+//to drop a column
+alter table employes drop column hire_date;
+describe employes;
++------------+--------------+------+-----+---------+-------+
+| Field      | Type         | Null | Key | Default | Extra |
++------------+--------------+------+-----+---------+-------+
+| emp_id     | int(11)      | YES  |     | NULL    |       |
+| fname      | varchar(50)  | YES  |     | NULL    |       |
+| lname      | varchar(50)  | YES  |     | NULL    |       |
+| email      | varchar(30)  | YES  |     | NULL    |       |
+| hourly_pay | decimal(5,2) | YES  |     | NULL    |       |
++------------+--------------+------+-----+---------+-------+
